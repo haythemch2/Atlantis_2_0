@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface MyIconProps {
   width?: string;
   height?: string;

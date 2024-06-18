@@ -1,6 +1,7 @@
 import { upload, download } from 'thirdweb/storage';
 import { AtlantisContract, client } from './client';
 import { PlotData } from '../components/plot/PlotInfo';
+import { gamePatch } from './gameConfig';
 
 export const saveJsonDataInIpfs = async (plotX: number, plotY: number, ownerAddress: string): Promise<string> => {
   const plotJsonData: PlotData = {
@@ -11,7 +12,7 @@ export const saveJsonDataInIpfs = async (plotX: number, plotY: number, ownerAddr
     metadata: {
       name: `${plotX}x${plotY} Plot`,
       description: 'A beautiful piece of virtual real estate',
-      edition: 'Atlantis 2.0 patch 240609',
+      edition: `Atlantis 2.0 patch ${gamePatch}`,
     }
   };
   const uri = await upload({

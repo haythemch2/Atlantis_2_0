@@ -24,6 +24,8 @@ export interface Boundaries {
     boundaries_X: { min: 500, max: -600 },
     boundaries_Y: { min: 200, max: -900 },
   };
+
+  export const gamePatch: string = "240618"
   
   export default gameConfig;
   
