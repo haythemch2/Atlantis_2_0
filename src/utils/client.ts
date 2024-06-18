@@ -10,5 +10,5 @@ export const client = createThirdwebClient({
 export const AtlantisContract = getContract({ 
     client: client, 
     chain: sepolia, 
-    address: import.meta.env.VITE_TEMPLATE_LOTTO_CONTRACT_ADDRESS,
+    address: import.meta.env.VITE_TEMPLATE_CONTRACT_ADDRESS,
   });

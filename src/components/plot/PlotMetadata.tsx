@@ -1,6 +1,5 @@
-import React from 'react'
 import { PlotData } from './PlotInfo'
-import EvmAddress from './EvmAddress'
+import EvmAddress from '../EvmAddress'
 
 type Props = {
     data: PlotData | null

@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface ControlPanelProps {
+interface TopPanelProps {
   coordinates: { x: number; y: number };
   plot: { x: number; y: number };
 }
 
-const ControlPanel: React.FC<ControlPanelProps> = ({ coordinates, plot }) => {
+const TopPanel: React.FC<TopPanelProps> = ({ coordinates, plot }) => {
   return (
     <div className='max-w-[1200px] w-full mt-2'>
       <div className='w-full flex justify-between'>
@@ -20,4 +20,4 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ coordinates, plot }) => {
   );  
 };
 
-export default ControlPanel;
+export default TopPanel;

@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-semi */
 import {
   prepareEvent,
   prepareContractCall,
@@ -45,7 +46,7 @@ export function approvalEvent(filters: ApprovalEventFilters = {}) {
     signature: "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
     filters,
   });
-};
+}
   
 
 /**

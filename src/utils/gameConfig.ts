@@ -1,4 +1,4 @@
-interface Boundaries {
+export interface Boundaries {
     min: number;
     max: number;
   }

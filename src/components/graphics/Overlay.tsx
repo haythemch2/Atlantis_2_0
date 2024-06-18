@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Container, Text } from '@pixi/react';
 import { TextStyle, BlurFilter } from 'pixi.js';
-import Message from '../Message';
+import Message from '../../Message';
 
 interface OverlayProps {
   blurFilter: BlurFilter;
