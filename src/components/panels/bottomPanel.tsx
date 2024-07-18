@@ -8,7 +8,7 @@ type Props = {
     plotY: number,
 }
 
-const BottomPanel = (props: Props) => {
+const BottomPanel = (props: Props) => { //TODO: discard component 
   return (
     <div className='flex max-w-[1200px] m-auto h-[12rem]'>
     <div className='w-1/4 flex justify-center items-center'>

@@ -11,9 +11,10 @@ interface PlotClaimButtonProps {
   isSelectedPlotOwned: boolean;
   isVerifyingOwnership: boolean;
   ownerAddress: string;
+  onMintTransactionConfirmation: () => void;
 }
 
-const PlotClaimButton: React.FC<PlotClaimButtonProps> = ({ plotX, plotY, isSelectedPlotOwned, isVerifyingOwnership, ownerAddress }) => {
+const PlotClaimButton: React.FC<PlotClaimButtonProps> = ({ plotX, plotY, isSelectedPlotOwned, isVerifyingOwnership, ownerAddress, onMintTransactionConfirmation }) => {
   const customTransactionBtnStyle = useMemo(() => {
     const style: React.CSSProperties = {
       width: '8rem',
@@ -44,6 +45,7 @@ const PlotClaimButton: React.FC<PlotClaimButtonProps> = ({ plotX, plotY, isSelec
       }}
       onTransactionConfirmed={(receipt) => {
         console.log("Transaction confirmed", receipt.transactionHash);
+        onMintTransactionConfirmation()
       }}
       onError={(error) => {
         console.error("Transaction error", error);
