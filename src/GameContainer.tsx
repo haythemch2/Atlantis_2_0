@@ -5,7 +5,7 @@ import gameConfig from "./utils/gameConfig"
 import TopPanel from './components/panels/topPanel';
 import PlotInfo, { PlotData } from "./components/plot/PlotInfo"
 import LoadingHandler from "./components/LoadingHandler"
-import GameDisplay from "./Game"
+import GameDisplay from "./GameDisplay"
 import { useReadContract } from "thirdweb/react";
 import { doesPlotExist, getPlotURI } from "./utils/contractUtils";
 import { AtlantisContract } from "./utils/client";
@@ -22,24 +22,15 @@ export type Coords = {
 }
 
 const GameContainer = () => {
-  const canvasSize: Size = { width: 1024, height: 576 } // TODO: use gameConfig for initial values
-  const initialMapOffset: Coords = { x: -840, y: -1250 }
-  const [mapPosition, setMapPosition] = useState<Coords>(initialMapOffset);
+  const { stageHeight, stageWidth, cameraOffset_X, cameraOffset_Y } = gameConfig;
+  const [mapPosition, setMapPosition] = useState<Coords>({ x: cameraOffset_X, y: cameraOffset_Y });
   const [isMintTransactionConfirmed, setIsMintTransactionConfirmed] = useState<boolean>(false);
 
-  const { plot, road, boundaries_X, boundaries_Y } = gameConfig;
   const {
       plotX,
       plotY,
       userFriendlyCoordinates
-    } = useMapCalculations({
-       cameraOffset: mapPosition,
-        stageWidth: canvasSize.width,
-         stageHeight: canvasSize.height,
-          plot: plot*4,
-           road: road*4,
-            boundaries_X,
-             boundaries_Y });
+    } = useMapCalculations(mapPosition);
 
   const { data: isSelectedPlotOwned, isLoading: isVerifyingOwnership } = useReadContract(doesPlotExist, {
     contract: AtlantisContract,
@@ -78,9 +69,9 @@ const GameContainer = () => {
           coordinates={userFriendlyCoordinates}
           plot={{ x: plotX, y: plotY }}
         />
-        <Stage width={canvasSize.width} height={canvasSize.height} options={{ background: 0x00CC99 }}>
-            <LoadingHandler canvasSize={canvasSize}>
-              <GameDisplay isSelectedPlotOwned={!!isSelectedPlotOwned} canvasSize={canvasSize} mapPosition={mapPosition} setMapPosition={setMapPosition} plotX={plotX} plotY={plotY} isMintTransactionConfirmed={isMintTransactionConfirmed}/>
+        <Stage width={stageWidth} height={stageHeight} options={{ background: 0x00CC99 }}>
+            <LoadingHandler>
+              <GameDisplay isSelectedPlotOwned={!!isSelectedPlotOwned} mapPosition={mapPosition} setMapPosition={setMapPosition} plotX={plotX} plotY={plotY} isMintTransactionConfirmed={isMintTransactionConfirmed}/>
             </LoadingHandler>
         </Stage>
       </div>

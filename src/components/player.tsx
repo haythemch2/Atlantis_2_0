@@ -1,10 +1,11 @@
 // components/player.tsx
 
 import { Container, Sprite, useTick } from "@pixi/react";
-import { Coords, Size } from "../GameContainer";
+import { Coords } from "../GameContainer";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Assets, Rectangle, Sprite as SpriteType, Texture } from "pixi.js";
 import { verifyBoundariesCollisions } from "../utils/collisions";
+import gameConfig from "../utils/gameConfig";
 
 const frameWidth = 192 / 4;
 const frameHeight = 68;
@@ -18,13 +19,14 @@ const textureCacheKeys: { [key: string]: string } = {
 };
 
 type PlayerProps = {
-  canvasSize: Size;
   mapPosition: Coords,
   isGameStarted: boolean,
   setMapPosition: React.Dispatch<React.SetStateAction<Coords>>;
 };
 
-const Player = ({ canvasSize, mapPosition, isGameStarted, setMapPosition }: PlayerProps) => {
+const Player = ({ mapPosition, isGameStarted, setMapPosition }: PlayerProps) => {
+  const { stageHeight, stageWidth} = gameConfig;
+
   const [frame, setFrame] = useState(0);
   const [lastUpdate, setLastUpdate] = useState(Date.now());
 
@@ -122,7 +124,7 @@ const Player = ({ canvasSize, mapPosition, isGameStarted, setMapPosition }: Play
 
   return (
     <Container >
-      <Sprite ref={playerRef} anchor={0.5} texture={frameTexture} x={canvasSize.width * 0.5} y={canvasSize.height * 0.5} width={frameWidth} height={frameHeight} />
+      <Sprite ref={playerRef} anchor={0.5} texture={frameTexture} x={stageWidth * 0.5} y={stageHeight * 0.5} width={frameWidth} height={frameHeight} />
     </Container>
   );
 };

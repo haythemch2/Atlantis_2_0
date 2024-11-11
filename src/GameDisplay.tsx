@@ -2,7 +2,7 @@ import { Container, Graphics, Sprite } from '@pixi/react'
 import { useCallback, useMemo, useState } from 'react'
 import Player from './components/player'
 import Preview from './components/graphics/Preview'
-import { Coords, Size } from './GameContainer'
+import { Coords } from './GameContainer'
 import { Assets, BlurFilter, LINE_CAP, LINE_JOIN, Rectangle, Texture } from 'pixi.js'
 import Menu from './components/gui/menu'
 import gameConfig from './utils/gameConfig'
@@ -11,7 +11,6 @@ import CelebrationParticles from './components/CelebrationParticles'
 
 type IGameState = {
   mapPosition: Coords,
-  canvasSize: Size,
   plotX: number,
   plotY: number,
   isSelectedPlotOwned: boolean,
@@ -19,7 +18,7 @@ type IGameState = {
   isMintTransactionConfirmed: boolean;
 }
 
-const GameDisplay = ({mapPosition, canvasSize, plotX, plotY, isSelectedPlotOwned, setMapPosition, isMintTransactionConfirmed}: IGameState) => {
+const GameDisplay = ({mapPosition, plotX, plotY, isSelectedPlotOwned, setMapPosition, isMintTransactionConfirmed}: IGameState) => {
   const [isGameStarted, setIsGameStarted] = useState(false);
 
   const handlePlay = () => {
@@ -27,17 +26,11 @@ const GameDisplay = ({mapPosition, canvasSize, plotX, plotY, isSelectedPlotOwned
   };
 
   const handleExit = () => {
-    // Handle exit logic
+    // TODO: Handle exit logic
     console.log("Exiting game...");
   };
   const shadowBlurFilter = useMemo(() => new BlurFilter(2, 5), []);
   const { plot } = gameConfig;
-
-  // const drawBorder = useCallback((g: TypeGraphics) => {
-  //   g.clear();
-  //   g.lineStyle(2, 0xff0000, 1);
-  //   g.drawRect(plotX, plotY, plot * 4, plot * 4);
-  // }, [plotX, plotY, plot]);
 
   const mapTexture = useMemo(() => Assets.get('map2'), [])
 
@@ -47,8 +40,6 @@ const GameDisplay = ({mapPosition, canvasSize, plotX, plotY, isSelectedPlotOwned
   ), [mapTexture.baseTexture, plotX, plotY, plot]);
 
   const drawPlotBorder = useCallback((graphics: TypeGraphics) => {
-    console.log(isSelectedPlotOwned);
-    
     const x = plotX;
     const y = plotY;
     const width = plot * 4;
@@ -136,29 +127,19 @@ const GameDisplay = ({mapPosition, canvasSize, plotX, plotY, isSelectedPlotOwned
               <Graphics draw={drawPlotBorder} />
               <CelebrationParticles plotX={plotX} plotY={plotY} plotWidth={plot} plotHeight={plot} isMintTransactionConfirmed={isMintTransactionConfirmed}/>
             </Container>
-            <Player canvasSize={canvasSize} mapPosition={mapPosition} isGameStarted={isGameStarted}  setMapPosition={setMapPosition} />
+            <Player mapPosition={mapPosition} isGameStarted={isGameStarted}  setMapPosition={setMapPosition} />
             <Container x={mapPosition.x} y={mapPosition.y} >
               <Sprite texture={Assets.get('map2_foreGround')} x={0} y={0} />
             </Container>
             {!isGameStarted && (
-          <Menu canvasSize={canvasSize} onPlay={handlePlay} onExit={handleExit} />
+          <Menu onPlay={handlePlay} onExit={handleExit} />
         ) }
         {(isGameStarted) && (
             <Preview
-              stageWidth={canvasSize.width}
               shadowBlurFilter={shadowBlurFilter}
               plotTexture={plotTexture}
             />
           )}
-            {/* {boundaries.map((boundary) => (
-                <Sprite 
-                texture={Texture.WHITE} 
-                width={boundary.width} 
-                height={boundary.height} 
-                x={boundary.x + mapPosition.x} 
-                y={boundary.y + mapPosition.y}
-                />
-            ))} */}
     </>
   )
 }

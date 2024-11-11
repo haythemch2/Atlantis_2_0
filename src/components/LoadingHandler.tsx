@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { loadAssets } from '../utils/loading';
 import { Container, Graphics, Sprite, Text } from '@pixi/react';
 import { Graphics as TypeGraphics, TextStyle, Assets } from 'pixi.js';
-import { Size } from '../GameContainer';
+import gameConfig from '../utils/gameConfig';
 
 const assets: Map<string, string> = new Map([
   ['map2', '/map2.png'],
@@ -15,10 +15,11 @@ const assets: Map<string, string> = new Map([
 
 interface LoadingHandlerProps {
   children: React.ReactNode;
-  canvasSize: Size;
 }
 
-const LoadingHandler: React.FC<LoadingHandlerProps> = ({ children, canvasSize }) => {
+const LoadingHandler: React.FC<LoadingHandlerProps> = ({ children }) => {
+  const { stageHeight, stageWidth} = gameConfig;
+
   const [loading, setLoading] = useState(true);
   const [bgLoaded, setBgLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -83,7 +84,7 @@ const LoadingHandler: React.FC<LoadingHandlerProps> = ({ children, canvasSize })
   if (loading) {
     return (
       <>
-     {bgLoaded &&  <Sprite texture={Assets.get('loading_bg')} x={canvasSize.width - 1024} y={canvasSize.height - 1024 + 100}/>}
+     {bgLoaded &&  <Sprite texture={Assets.get('loading_bg')} x={stageWidth - 1024} y={stageHeight - 1024 + 100}/>}
       <Container x={150} y={160}>
         <Graphics draw={drawBorder} />
         <Graphics draw={drawProgress} />

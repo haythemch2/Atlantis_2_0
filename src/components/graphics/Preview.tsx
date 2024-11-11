@@ -1,14 +1,16 @@
 import React, { useMemo } from 'react';
 import { Container, Sprite, Text } from '@pixi/react';
 import { TextStyle, Texture, BlurFilter } from 'pixi.js';
+import gameConfig from '../../utils/gameConfig';
 
 interface PreviewProps {
-  stageWidth: number;
   shadowBlurFilter: BlurFilter;
   plotTexture: Texture;
 }
 
-const Preview: React.FC<PreviewProps> = ({ stageWidth, shadowBlurFilter, plotTexture }) => {
+const Preview: React.FC<PreviewProps> = ({ shadowBlurFilter, plotTexture }) => {
+  const { stageWidth } = gameConfig;
+
   const retroTextStyle = useMemo(() => new TextStyle({
     fontFamily: 'Press Start 2P',
     fontSize: 28,

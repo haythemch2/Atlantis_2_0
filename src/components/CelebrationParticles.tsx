@@ -11,8 +11,8 @@ interface ParticleProps {
 }
 
 const NUM_PARTICLES = 150;
-const PARTICLE_LIFETIME = 3000; // milliseconds
-const EMISSION_DURATION = 2000; // milliseconds
+const PARTICLE_LIFETIME = 3000; // ms
+const EMISSION_DURATION = 2000; // ms
 
 interface Particle {
   x: number;
@@ -72,8 +72,6 @@ const CelebrationParticles: React.FC<ParticleProps> = ({ plotX, plotY, plotWidth
   });
 
   useEffect(() => {
-    console.log('called');
-    
     triggerEmission();
   }, [isMintTransactionConfirmed]);
 
@@ -87,7 +85,7 @@ const CelebrationParticles: React.FC<ParticleProps> = ({ plotX, plotY, plotWidth
           y={particle.y}
           anchor={0.5}
           alpha={particle.alpha}
-          tint={0xFFD700} // Gold color
+          tint={0xFFD700}
           width={4}
           height={4}
         />
