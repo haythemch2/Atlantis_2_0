@@ -27,14 +27,13 @@ type PlayerProps = {
 const Player = ({ mapPosition, isGameStarted, setMapPosition }: PlayerProps) => {
   const { stageHeight, stageWidth} = gameConfig;
 
-  const [frame, setFrame] = useState(0);
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
-
-  const navigationKeys = useMemo(() => ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'], []);
-  const [keysPressed, setKeysPressed] = useState<Record<string, boolean>>({});
-
   const playerRef = useRef<SpriteType>(null);
 
+  const [frame, setFrame] = useState(0);
+  const [lastUpdate, setLastUpdate] = useState(Date.now());
+  const [keysPressed, setKeysPressed] = useState<Record<string, boolean>>({});
+
+  const navigationKeys = useMemo(() => ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'], []);
   const direction = useMemo(() => {
     const pressedKeys = Object.entries(keysPressed)
       .filter(([key, pressed]) => pressed && navigationKeys.includes(key))
@@ -44,7 +43,6 @@ const Player = ({ mapPosition, isGameStarted, setMapPosition }: PlayerProps) => 
 
     return lastPressedKey || 'ArrowDown'; // Default to 'ArrowDown' if no key is pressed
   }, [keysPressed, navigationKeys]);
-
   const isMoving = useMemo(() => {
     return (
       keysPressed['ArrowDown'] ||
@@ -55,7 +53,6 @@ const Player = ({ mapPosition, isGameStarted, setMapPosition }: PlayerProps) => 
   }, [keysPressed]);
 
   const texture = Assets.get(textureCacheKeys[direction]);
-
   const x = frame * frameWidth;
   const y = 0;
 

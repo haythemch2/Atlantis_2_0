@@ -23,8 +23,10 @@ export type Coords = {
 
 const GameContainer = () => {
   const { stageHeight, stageWidth, cameraOffset_X, cameraOffset_Y } = gameConfig;
+
   const [mapPosition, setMapPosition] = useState<Coords>({ x: cameraOffset_X, y: cameraOffset_Y });
-  const [isMintTransactionConfirmed, setIsMintTransactionConfirmed] = useState<boolean>(false);
+  const [plotTransactionConfirmed, setPlotTransactionConfirmed] = useState<Coords>({x:0,y:0});
+  const [selectedPlot, setSelectedPlot] = useState<PlotData | null>(null);
 
   const {
       plotX,
@@ -44,7 +46,11 @@ const GameContainer = () => {
     y: BigInt(plotY),
   });
 
-  const [selectedPlot, setSelectedPlot] = useState<PlotData | null>(null);
+  const onMintTransactionConfirmation = useCallback(    
+    (coords: Coords) => {
+      setPlotTransactionConfirmed(coords)},
+    [],
+  )
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,14 +59,7 @@ const GameContainer = () => {
     };
 
     fetchData();
-  }, [plotX, plotY, selectedPlotUri]);
-
-  const onMintTransactionConfirmation = useCallback(    
-    () => {
-      setIsMintTransactionConfirmed(!isMintTransactionConfirmed)},
-    [],
-  )
-  
+  }, [plotX, plotY, selectedPlotUri]);  
 
   return (
     <div className="max-w-[1200px]  m-auto">
@@ -71,7 +70,7 @@ const GameContainer = () => {
         />
         <Stage width={stageWidth} height={stageHeight} options={{ background: 0x00CC99 }}>
             <LoadingHandler>
-              <GameDisplay isSelectedPlotOwned={!!isSelectedPlotOwned} mapPosition={mapPosition} setMapPosition={setMapPosition} plotX={plotX} plotY={plotY} isMintTransactionConfirmed={isMintTransactionConfirmed}/>
+              <GameDisplay isSelectedPlotOwned={!!isSelectedPlotOwned} mapPosition={mapPosition} setMapPosition={setMapPosition} plotX={plotX} plotY={plotY} plotTransactionConfirmed={plotTransactionConfirmed}/>
             </LoadingHandler>
         </Stage>
       </div>

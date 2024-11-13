@@ -3,6 +3,7 @@ import PlotMetadata from './PlotMetadata';
 import PlotStatus from './plotStatus';
 import PlotClaimButton from './plotClaimButton';
 import { useActiveAccount } from 'thirdweb/react';
+import { Coords } from '../../GameContainer';
 
 export interface PlotData {
   plotX: number;
@@ -26,7 +27,7 @@ interface PlotInfoProps {
   isSelectedPlotOwned: boolean
   selectedPlotUri: string | null;
   selectedPlot: PlotData | null;
-  onMintTransactionConfirmation: () => void;
+  onMintTransactionConfirmation: (coords: Coords) => void;
 }
 
 const PlotInfo: React.FC<PlotInfoProps> = ({ plotX, plotY, isLoadingSelectedPlotUri, isVerifyingOwnership, isSelectedPlotOwned, selectedPlotUri, selectedPlot, onMintTransactionConfirmation }) => {

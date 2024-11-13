@@ -29,11 +29,9 @@ const LoadingHandler: React.FC<LoadingHandlerProps> = ({ children }) => {
   const loadProgressUpdate = useCallback((e: number) => {
     setProgress(prev => {
       const target = easeOutQuad(e);
-      // Increase the smoothing factor as we get closer to 1
       const smoothingFactor = 0.1 + (target * 0.5);
       const smoothed = prev + (target - prev) * smoothingFactor;
       
-      // Force to 1 if we're very close to completion
       if (target > 0.99) {
         return 1;
       }

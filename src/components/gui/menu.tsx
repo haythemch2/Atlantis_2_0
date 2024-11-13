@@ -11,10 +11,9 @@ const buttonMargin = 120;
 
 type MenuProps = {
   onPlay: () => void;
-  onExit: () => void;
 };
 
-const Menu = ({ onPlay, onExit }: MenuProps) => {
+const Menu = ({ onPlay }: MenuProps) => {
   const { stageHeight, stageWidth} = gameConfig;
 
   const [showModal, setShowModal] = useState(false);
@@ -34,7 +33,6 @@ const Menu = ({ onPlay, onExit }: MenuProps) => {
   return (
     <Container x={(stageWidth * 0.5)} y={stageHeight * 0.5} anchor={0.5}>
       <RetroButton text="Start" y={-(buttonHeight) + buttonMargin} onClick={handlePlay} />
-      <RetroButton text="Exit" y={buttonHeight + buttonMargin} onClick={onExit} />
       <Container y={-350} x={-360} >
         <GameTitle />
       </Container>

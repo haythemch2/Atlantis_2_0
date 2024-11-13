@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { TransactionButton } from 'thirdweb/react';
 import { mintPlot } from '../../utils/contractUtils';
 import { AtlantisContract } from '../../utils/client';
 import MintIcon from '../../common/MintIcon';
 import { saveJsonDataInIpfs } from '../../utils/plotUtils';
+import { Coords } from '../../GameContainer';
 
 interface PlotClaimButtonProps {
   plotX: number;
@@ -11,10 +12,11 @@ interface PlotClaimButtonProps {
   isSelectedPlotOwned: boolean;
   isVerifyingOwnership: boolean;
   ownerAddress: string;
-  onMintTransactionConfirmation: () => void;
+  onMintTransactionConfirmation: (coords: Coords) => void;
 }
 
 const PlotClaimButton: React.FC<PlotClaimButtonProps> = ({ plotX, plotY, isSelectedPlotOwned, isVerifyingOwnership, ownerAddress, onMintTransactionConfirmation }) => {
+  const plotBeingClaimed = useRef<{ x: number; y: number }>();
   const customTransactionBtnStyle = useMemo(() => {
     const style: React.CSSProperties = {
       width: '8rem',
@@ -23,13 +25,19 @@ const PlotClaimButton: React.FC<PlotClaimButtonProps> = ({ plotX, plotY, isSelec
     return style;
   }, []);
 
+  const handleTransactionConfirmation = () => {
+    if(plotBeingClaimed.current) {
+      onMintTransactionConfirmation(plotBeingClaimed.current)
+    }
+  }
   return (
     <TransactionButton
       style={customTransactionBtnStyle}
       disabled={isSelectedPlotOwned || isVerifyingOwnership}
       transaction={async () => {
+        console.log({x:plotX,y:plotY});
+        plotBeingClaimed.current = {x:plotX,y:plotY}
         const uri = await saveJsonDataInIpfs(plotX, plotY, ownerAddress);
-        console.log(uri);
         
         const tx = mintPlot({
           contract: AtlantisContract,
@@ -45,7 +53,7 @@ const PlotClaimButton: React.FC<PlotClaimButtonProps> = ({ plotX, plotY, isSelec
       }}
       onTransactionConfirmed={(receipt) => {
         console.log("Transaction confirmed", receipt.transactionHash);
-        onMintTransactionConfirmation()
+        handleTransactionConfirmation();
       }}
       onError={(error) => {
         console.error("Transaction error", error);

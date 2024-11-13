@@ -7,8 +7,8 @@ const GameTitle: React.FC = () => {
     fontFamily: 'Press Start 2P, Courier, monospace',
     fontSize: 48,
     fontWeight: 'bold',
-    fill: ['#FFD700', '#FFA500'], // Gold to orange gradient
-    stroke: '#4A0E0E', // Dark red outline
+    fill: ['#FFD700', '#FFA500'],
+    stroke: '#4A0E0E',
     strokeThickness: 5,
     dropShadow: true,
     dropShadowColor: '#000000',

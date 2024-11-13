@@ -1,10 +1,11 @@
 import { useMemo, useRef } from 'react';
 import gameConfig from '../utils/gameConfig';
+import { Coords } from '../GameContainer';
 interface MapCalculations {
-  interpolatedPosition: { x: number, y: number };
+  interpolatedPosition: Coords;
   plotX: number;
   plotY: number;
-  userFriendlyCoordinates: { x: number, y: number };
+  userFriendlyCoordinates: Coords;
 }
 
 const { stageWidth, stageHeight, plot, road, boundaries_X, boundaries_Y } = gameConfig;
@@ -21,8 +22,8 @@ const isPlotRestricted = (plotX: number, plotY: number) : boolean => {
   return isRestricted || isOutOfLimit
 }
 
-const useMapCalculations = (cameraOffset: { x: number, y: number }): MapCalculations => {
-  const previousClosestPlotRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+const useMapCalculations = (cameraOffset: Coords): MapCalculations => {
+  const previousClosestPlotRef = useRef<Coords>({ x: 0, y: 0 });
 
   const interpolatedPosition = useMemo(() => ({
     x: cameraOffset.x,

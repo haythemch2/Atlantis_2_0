@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Container, Sprite, useTick } from '@pixi/react';
 import * as PIXI from 'pixi.js';
+import { Coords } from '../GameContainer';
 
 interface ParticleProps {
   plotX: number;
   plotY: number;
   plotWidth: number;
   plotHeight: number;
-  isMintTransactionConfirmed: boolean;
+  plotTransactionConfirmed: Coords;
 }
 
 const NUM_PARTICLES = 150;
@@ -23,13 +24,13 @@ interface Particle {
   life: number;
 }
 
-const CelebrationParticles: React.FC<ParticleProps> = ({ plotX, plotY, plotWidth, plotHeight, isMintTransactionConfirmed }) => {
+const CelebrationParticles: React.FC<ParticleProps> = ({ plotWidth, plotHeight, plotTransactionConfirmed }) => {
   const [isEmitting, setIsEmitting] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
   const emissionStartTime = useRef(0);
   
-  const centerX = plotX + 2 * plotWidth;
-  const centerY = plotY + 2 * plotHeight;
+  const centerX = plotTransactionConfirmed.x + 2 * plotWidth;
+  const centerY = plotTransactionConfirmed.y + 2 * plotHeight;
 
   const createParticle = useCallback((): Particle => {
     const angle = Math.random() * Math.PI * 2;
@@ -73,7 +74,8 @@ const CelebrationParticles: React.FC<ParticleProps> = ({ plotX, plotY, plotWidth
 
   useEffect(() => {
     triggerEmission();
-  }, [isMintTransactionConfirmed]);
+    console.log(plotTransactionConfirmed);
+  }, [plotTransactionConfirmed]);
 
   return (
     <Container>

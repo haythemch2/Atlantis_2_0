@@ -1,8 +1,9 @@
 import React from 'react';
+import { Coords } from '../../GameContainer';
 
 interface TopPanelProps {
-  coordinates: { x: number; y: number };
-  plot: { x: number; y: number };
+  coordinates: Coords;
+  plot: Coords;
 }
 
 const TopPanel: React.FC<TopPanelProps> = ({ coordinates, plot }) => {

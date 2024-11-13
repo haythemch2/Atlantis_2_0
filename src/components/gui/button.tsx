@@ -6,10 +6,10 @@ const buttonWidth = 200;
 const buttonHeight = 60;
 
 const retroColors = {
-  background: 0x4A0E0E, // Dark red
-  hover: 0x6B1515, // Slightly lighter red
-  border: 0xFFD700, // Gold
-  text: ['#FFD700', '#FFA500'], // Gold to orange gradient
+  background: 0x4A0E0E,
+  hover: 0x6B1515,
+  border: 0xFFD700,
+  text: ['#FFD700', '#FFA500'],
 };
 
 const buttonTextStyle = new TextStyle({
@@ -52,7 +52,7 @@ const RetroButton: React.FC<{ text: string; y: number; onClick: () => void }> = 
     g.drawRect(buttonWidth - 8, buttonHeight - 8, 8, 8);
     g.endFill();
   
-    // Add some inner shadow effect
+    // inner shadow effect
     g.lineStyle(2, 0x000000, 0.3);
     g.moveTo(4, buttonHeight - 4);
     g.lineTo(4, 4);

@@ -15,29 +15,25 @@ type IGameState = {
   plotY: number,
   isSelectedPlotOwned: boolean,
   setMapPosition: React.Dispatch<React.SetStateAction<Coords>>,
-  isMintTransactionConfirmed: boolean;
+  plotTransactionConfirmed: Coords;
 }
 
-const GameDisplay = ({mapPosition, plotX, plotY, isSelectedPlotOwned, setMapPosition, isMintTransactionConfirmed}: IGameState) => {
+const GameDisplay = ({mapPosition, plotX, plotY, isSelectedPlotOwned, setMapPosition, plotTransactionConfirmed}: IGameState) => {
+  const { plot } = gameConfig;
+  
   const [isGameStarted, setIsGameStarted] = useState(false);
 
-  const handlePlay = () => {
-    setIsGameStarted(true);
-  };
-
-  const handleExit = () => {
-    // TODO: Handle exit logic
-    console.log("Exiting game...");
-  };
-  const shadowBlurFilter = useMemo(() => new BlurFilter(2, 5), []);
-  const { plot } = gameConfig;
 
   const mapTexture = useMemo(() => Assets.get('map2'), [])
-
+  const shadowBlurFilter = useMemo(() => new BlurFilter(2, 5), []);
   const plotTexture = useMemo(() => new Texture(
     mapTexture.baseTexture,
     new Rectangle(plotX, plotY, plot * 4, plot * 4)
   ), [mapTexture.baseTexture, plotX, plotY, plot]);
+
+  const handlePlay = () => {
+    setIsGameStarted(true);
+  };
 
   const drawPlotBorder = useCallback((graphics: TypeGraphics) => {
     const x = plotX;
@@ -119,27 +115,23 @@ const GameDisplay = ({mapPosition, plotX, plotY, isSelectedPlotOwned, setMapPosi
     }
   }, [plotX, plotY, plot, isSelectedPlotOwned]);
 
-
   return (
     <>
     <Container x={mapPosition.x} y={mapPosition.y} >
               <Sprite texture={Assets.get('map2')} x={0} y={0} />
               <Graphics draw={drawPlotBorder} />
-              <CelebrationParticles plotX={plotX} plotY={plotY} plotWidth={plot} plotHeight={plot} isMintTransactionConfirmed={isMintTransactionConfirmed}/>
+              <CelebrationParticles plotX={plotX} plotY={plotY} plotWidth={plot} plotHeight={plot} plotTransactionConfirmed={plotTransactionConfirmed}/>
             </Container>
             <Player mapPosition={mapPosition} isGameStarted={isGameStarted}  setMapPosition={setMapPosition} />
             <Container x={mapPosition.x} y={mapPosition.y} >
               <Sprite texture={Assets.get('map2_foreGround')} x={0} y={0} />
             </Container>
-            {!isGameStarted && (
-          <Menu onPlay={handlePlay} onExit={handleExit} />
-        ) }
-        {(isGameStarted) && (
+        {isGameStarted ? (
             <Preview
               shadowBlurFilter={shadowBlurFilter}
               plotTexture={plotTexture}
             />
-          )}
+          ): <Menu onPlay={handlePlay} />}
     </>
   )
 }
