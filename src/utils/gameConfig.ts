@@ -29,7 +29,7 @@ const gameConfig: GameConfig = {
     boundaries_Y: { min: 200, max: -900 },
 };
 
-export const gamePatch: string = "241111";
+export const gamePatch: string = "241411";
   
 export default gameConfig;
   
