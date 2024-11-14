@@ -1,5 +1,5 @@
 import { useTick } from '@pixi/react';
-import React from 'react'
+import React from 'react';
 import { Boundaries } from '../utils/gameConfig';
 
 type Props = {
@@ -18,25 +18,25 @@ const TickerHandler = ({ paused, connectedAddress, setCameraOffset, keysPressedR
 
     useTick(() => {
         if (!paused && connectedAddress) {
-          setCameraOffset((prevPosition) => {
-            const newPosition = { ...prevPosition };
-            const keysPressed = keysPressedRef.current;
-            if (keysPressed['ArrowUp']) newPosition.y += 5;
-            if (keysPressed['ArrowDown']) newPosition.y -= 5;
-            if (keysPressed['ArrowLeft']) newPosition.x += 5;
-            if (keysPressed['ArrowRight']) newPosition.x -= 5;
+            setCameraOffset((prevPosition) => {
+                const newPosition = { ...prevPosition };
+                const keysPressed = keysPressedRef.current;
+                if (keysPressed['ArrowUp']) newPosition.y += 5;
+                if (keysPressed['ArrowDown']) newPosition.y -= 5;
+                if (keysPressed['ArrowLeft']) newPosition.x += 5;
+                if (keysPressed['ArrowRight']) newPosition.x -= 5;
     
-            newPosition.x = Math.max(Math.min(newPosition.x, boundaries_X.min), boundaries_X.max);
-            newPosition.y = Math.max(Math.min(newPosition.y, boundaries_Y.min), boundaries_Y.max);
+                newPosition.x = Math.max(Math.min(newPosition.x, boundaries_X.min), boundaries_X.max);
+                newPosition.y = Math.max(Math.min(newPosition.y, boundaries_Y.min), boundaries_Y.max);
     
-            return newPosition;
-          });
+                return newPosition;
+            });
         }
-      });
+    });
 
-  return (
-    <></>
-  )
-}
+    return (
+        <></>
+    );
+};
 
-export default TickerHandler
+export default TickerHandler;

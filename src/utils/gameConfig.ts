@@ -16,7 +16,7 @@ export interface Boundaries {
     boundaries_Y: Boundaries;
   }
   
-  const gameConfig: GameConfig = {
+const gameConfig: GameConfig = {
     mapUrl: '/map.png',
     tile: 12,
     plot: 12 * 9,
@@ -27,9 +27,9 @@ export interface Boundaries {
     cameraOffset_Y: -1250,
     boundaries_X: { min: 500, max: -600 },
     boundaries_Y: { min: 200, max: -900 },
-  };
+};
 
-  export const gamePatch: string = "241111"
+export const gamePatch: string = "241111";
   
-  export default gameConfig;
+export default gameConfig;
   
